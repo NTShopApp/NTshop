@@ -3,6 +3,7 @@ namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -12,10 +13,25 @@ class EditProType extends AbstractType{
         $builder
         // ->add('id',TextType::class)
         ->add('idpro',TextType::class)
-        ->add('namepro',TextType::class)
-        ->add('price',TextType::class)
-        ->add('infopro',TextType::class)
-        ->add('image',FileType::class)
+        ->add('namepro',TextType::class,[
+            'label'=>'Name'
+        ])
+        ->add('price',TextType::class,[
+            'label'=>'Price'
+        ])
+        ->add('infopro',TextType::class,[
+            'label'=>'Products Information'
+        ])
+        
+        
+        ->add('file',FileType::class,[
+            'label'=>'Product Img',
+            'required'=> false,
+            'mapped'=>false
+        ])
+        ->add('image',HiddenType::class,[
+            'required'=>false
+        ])
         ->add('save',SubmitType::class,[
             'label'=>"Add"
         ]);

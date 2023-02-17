@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,6 +43,26 @@ class Product
      * @ORM\Column(type="string", length=255)
      */
     private $image;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Cart::class, mappedBy="proid")
+     */
+    private $proid;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Supplier::class, inversedBy="pro")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $supplier;
+
+    
+
+    public function __construct()
+    {
+        $this->proid = new ArrayCollection();
+    }
+
+
 
     public function getId(): ?int
     {
@@ -106,4 +128,48 @@ class Product
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Cart>
+     */
+    public function getProid(): Collection
+    {
+        return $this->proid;
+    }
+
+    public function addProid(Cart $proid): self
+    {
+        if (!$this->proid->contains($proid)) {
+            $this->proid[] = $proid;
+            $proid->setProid($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProid(Cart $proid): self
+    {
+        if ($this->proid->removeElement($proid)) {
+            // set the owning side to null (unless already changed)
+            if ($proid->getProid() === $this) {
+                $proid->setProid(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getSupplier(): ?Supplier
+    {
+        return $this->supplier;
+    }
+
+    public function setSupplier(?Supplier $supplier): self
+    {
+        $this->supplier = $supplier;
+
+        return $this;
+    }
+
+
 }

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        {{ form_start(form) }}
+        <label>Product's ID</label>
+        {{ form_widget(form.idpro) }}
+        <label>Product's Name</label>
+        {{ form_widget(form.namepro) }}
+        <label>Product's Price</label>
+        {{ form_widget(form.price) }}
+        <label>Product's Information</label>
+        {{ form_widget(form.infopro) }}
+
+    <div class="pt-3">
+    {% set img = form.image.vars.value %}
+    {{img}}
+        {% if img %}
+            <img src="{{asset('images/'~img)}}"
+        class="w-25 shadow p-3 mb-5 bg-body rounded" />
+        {% else %}
+            <img src="https://cdn2.iconfinder.com/data/icons/symbol-blue-set-3/100/Untitled-1-94-512.png"
+        class="w-25 shadow p-3 mb-5 bg-body rounded" />
+        {% endif %}
+                                                
+{{ form_widget(form.image) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Cart</h1>
+   
+    <table class="table">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>ID Product</th>
+                <th>Name</th>
+                <th>Actions</th>
+                <th>Price</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+         {% for p in pro %}
+            <tr>
+                <td>{{ pro.id }}</td>
+                <td>{{ pro.idpro }}</td>
+                <td>{{ pro.namepro }}</td>
+                <td>{{ pro.quanlity}}</td>
+                <td>{{ pro.price}}</td>
+            </tr>
+        {% endfor %}
+        <button href = ''>Accept</button>
+        </tbody>
+    </table>
+
+
+{% endblock %}
