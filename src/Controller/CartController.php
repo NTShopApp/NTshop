@@ -26,5 +26,33 @@ class CartController extends AbstractController
         
     ]);
     }
+      /**
+     * @Route("/addone/{id}", name="addone")
+     */
+    public function addOneAction(CartRepository $repo, ValidatorInterface $valid, Product $pro, SupplierRepository $brand, Request $req ): Response
+    {   
+        // $user = $this->get('security.context')->getToken()->getUser();
+        // $userId = $user->getId();
+        
+        $quantity = $req->query->get('quantity');
+        $BR = $brand->findAll();
+        $cart = new Cart();
+        $id = $this->getUser();
+        $cart->setProId($pro);
+        $cart->setquantity($quantity);
+        // $cart->setbirthday(new \DateTime());
+        $cart->setusercart($id);
+        $error = $valid->validate($cart);
+        if(count($error)>0){
+            $err_str = (string)$error;
+            return new Response($err_str,400);
+        }
+        $repo->add($cart,true);
+        // return $this->json($cart);
+        return $this->redirectToRoute('cart', [
+            'brand' => $BR
+        ], Response::HTTP_SEE_OTHER);
+       
+    }
     
 }
