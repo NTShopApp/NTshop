@@ -15,17 +15,8 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class CartController extends AbstractController
 {
-    /**
-     * @Route("/cart/{id}", name="app_cart")
-     */
-    public function cart(Product $pro): Response
-    {
-        return $this->render('cart/index.html.twig', [
-           
-            'pro'=>$pro
-        
-    ]);
-    }
+   
+    
       /**
      * @Route("/addone/{id}", name="addone")
      */
@@ -49,7 +40,7 @@ class CartController extends AbstractController
         }
         $repo->add($cart,true);
         // return $this->json($cart);
-        return $this->redirectToRoute('cart', [
+        return $this->redirectToRoute('app_test', [
             'brand' => $BR, 'pro'=>$cart
         ], Response::HTTP_SEE_OTHER);
        
@@ -59,7 +50,8 @@ class CartController extends AbstractController
      */
     public function cartt(SupplierRepository $brand ,CartRepository $repo): Response
     {
-        $cart = $repo->findAll();
+        $id = $this->getUser();
+        $cart = $repo->cart($id);
         $BR = $brand->findAll();
         return $this->render('cart/index.html.twig', [
             'pro'=>$cart, 'brand' => $BR
