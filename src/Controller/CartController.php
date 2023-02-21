@@ -34,7 +34,7 @@ class CartController extends AbstractController
         $quantity = $req->query->get('quantity');
         $BR = $brand->findAll();
         $cart = new Cart();
-        $cart->setProId($id);
+        // $cart->setProId($id);
         $cart->setquantity($quantity);
         // $cart->setbirthday(new \DateTime());
         // $cart->setProid();

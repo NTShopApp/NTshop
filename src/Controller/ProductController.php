@@ -162,14 +162,13 @@ class ProductController extends AbstractController
      /**
      * @Route("/search", name="searchpro", methods="GET")
      */
-    public function searchAction(Request $req,SupplierRepository $brand,ProductRepository $rePro): Response
+    public function searchAction(Request $req,SupplierRepository $brand,ProductRepository $repo): Response
     {
         $BR = $brand->findAll();
-        $sName = $req->query->get("name");
-        $product = $rePro->findProductBySearch('$sName');
-        $n=$req->query->get("search");
+        $sName = $req->query->get("search");
+        $product = $repo->findProductBySearch($sName);
         return $this->render('product/search.html.twig', 
-        ['product'=>$product,'n'=>$n,'brand'=> $BR]);
+        ['product'=>$product,'brand'=> $BR]);
         // return $this->json($sName);
     }
     //   /**
