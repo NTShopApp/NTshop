@@ -48,10 +48,10 @@ class CartController extends AbstractController
             return new Response($err_str,400);
         }
         $repo->add($cart,true);
-        return $this->json($cart);
-        // return $this->redirectToRoute('cart', [
-        //     'brand' => $BR, 'pro'=>$cart
-        // ], Response::HTTP_SEE_OTHER);
+        // return $this->json($cart);
+        return $this->redirectToRoute('cart', [
+            'brand' => $BR, 'pro'=>$cart
+        ], Response::HTTP_SEE_OTHER);
        
     }
     /**

@@ -41,8 +41,9 @@
         <p class="price py-4">${{pro.price}}
           <!-- <s class="price">$30.00</s> -->
         </p>
-        {% set proid = pro.id %}
 
+        {% set proid = pro.id %}
+{% if app.user %}
         <form action="/addone/{{proid}}">
         <div>
           <input type="number" name = "quantity" value ="1" min ="1"
@@ -56,6 +57,23 @@
               data-item-custom1-options="Black|White|Gray" data-item-custom2-name="Choose Size"
               data-item-custom2-options="Small|Medium|Large">Add to Cart
             </button>
+          {% else %}
+            <form action="{{path('app_login')}}">
+        <div>
+          <input type="number" name = "quantity" value ="1" min ="1"
+          style =" border-radius: 25px;
+          margin-bottom:20px" ></input>
+        </div>
+          
+            <button class="snipcart-add-item btn btn-main mb-5" data-item-id="apple-watch__25.00"
+              data-item-name="Apple Watch" data-item-image="images/{{pro.image}}" data-item-price="25.00"
+              data-item-url="products/product-1/" data-item-custom1-name="Choose Color"
+              data-item-custom1-options="Black|White|Gray" data-item-custom2-name="Choose Size"
+              data-item-custom2-options="Small|Medium|Large">Add to Cart
+            </button>
+            {% endif %}
+
+            
           </form>
         
         <div class="content">
