@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Product!{% endblock %}
+
+{% block body %}
+<section class="section gallery">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center mb-5">
+        <h1 class="font-weight-bold">All latest Smart Watch</h1>
+      </div>
+      {% for p in pro %}
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+        <div class="block">
+          <div class="gallery-overlay">
+            <a href="{{path('productdetail',{'id':p.id})}}" class="gallery-popup">
+              <i class="tf-ion-plus-round"></i>
+            </a>
+          </div>
+          <img class="img-fluid" src="images/{{p.image}}" alt="Apple Watch">
+        </div>
+        <div class="product-info">
+        <h4 class="mb-2"><a href="{{path('productdetail',{'id':p.id})}}" class="link-title">{{p.namepro}}</a></h4>
+        <p class="price">${{p.price}}
+          <!-- <s class="price">$30.00</s> -->
+          </p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<script src="plugins/jquery/jquery.js"></script>
+
+<script src="plugins/bootstrap/bootstrap.min.js"></script>
+
+<script src="plugins/slick/slick.min.js"></script>
+
+<script src="js/script.js"></script>
+</body>
+</html>
+{% endblock %}

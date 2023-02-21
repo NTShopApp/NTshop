@@ -20,29 +20,18 @@ class Supplier
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $idsup;
+    private $namesup;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $namesup;
+    private $namesupp;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIdsup(): ?string
-    {
-        return $this->idsup;
-    }
-
-    public function setIdsup(string $idsup): self
-    {
-        $this->idsup = $idsup;
-
-        return $this;
-    }
 
     public function getNamesup(): ?string
     {
@@ -52,6 +41,18 @@ class Supplier
     public function setNamesup(string $namesup): self
     {
         $this->namesup = $namesup;
+
+        return $this;
+    }
+
+    public function getNamesupp(): ?string
+    {
+        return $this->namesupp;
+    }
+
+    public function setNamesupp(string $namesupp): self
+    {
+        $this->namesupp = $namesupp;
 
         return $this;
     }

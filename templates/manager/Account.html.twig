@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Account List</h1>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Addess</th>
+                <th>Action</th>
+
+
+                
+            </tr>
+        </thead>
+        <tbody>
+         {% for a in acc %}
+            <tr>
+                <td>{{ a.id}}</td>
+                <td>{{ a.name }}</td>
+                <td>{{ a.Email }}</td>
+                <td>{{ a.phone }}</td>
+                <td>{{ a.Address}}</td>
+                {# <td> 
+                
+                    <a href="{{ path('account_delete', { 'id': a.id }) }}">Delete</a>
+                    
+                </td> #}
+               
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}
