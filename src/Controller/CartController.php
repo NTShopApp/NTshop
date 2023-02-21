@@ -54,5 +54,15 @@ class CartController extends AbstractController
         ], Response::HTTP_SEE_OTHER);
        
     }
-    
+    /**
+     * @Route("/cart", name="cart")
+     */
+    public function cartt(SupplierRepository $brand ,CartRepository $repo): Response
+    {
+        $cart = $repo->findAll();
+        $BR = $brand->findAll();
+        return $this->render('cart/index.html.twig', [
+            'pro'=>$cart, 'brand' => $BR
+        ]);
+    }
 }
