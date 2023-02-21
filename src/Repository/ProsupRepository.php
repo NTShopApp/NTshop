@@ -38,6 +38,19 @@ class ProsupRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    /**
+    * @return Product[] Returns an array of Product objects
+    */
+   public function findProductBySearch($name): array
+   {
+       return $this->createQueryBuilder('p')
+           ->andWhere('p.namepro like :name')
+           ->setParameter('name','%'.$name.'%')
+           ->orderBy('p.idpro','ASC')
+           ->getQuery()
+           ->getResult()
+       ;
+   }
 //        /**
 //     * @return Product[] Returns an array of Product objects
 //     */

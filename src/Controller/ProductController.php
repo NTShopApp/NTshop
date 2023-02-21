@@ -158,6 +158,20 @@ class ProductController extends AbstractController
          $this->repo->remove($p,true);
          return $this->redirectToRoute('managerProduct', [], Response::HTTP_SEE_OTHER);
      }
+
+     /**
+     * @Route("/search", name="searchpro", methods="GET")
+     */
+    public function searchAction(Request $req,SupplierRepository $brand,ProductRepository $rePro): Response
+    {
+        $BR = $brand->findAll();
+        $sName = $req->query->get("name");
+        $product = $rePro->findProductBySearch('$sName');
+        $n=$req->query->get("search");
+        return $this->render('product/search.html.twig', 
+        ['product'=>$product,'n'=>$n,'brand'=> $BR]);
+        // return $this->json($sName);
+    }
     //   /**
     //  * @Route("/delete/account/{id}",name="account_delete",requirements={"id"="\d+"})
     //  */

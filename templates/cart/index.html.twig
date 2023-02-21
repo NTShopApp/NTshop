@@ -8,20 +8,20 @@
             <tr>
                 <th>No.</th>
                 <th>ID Product</th>
-                <th>Name</th>
+                <th>Quantity</th>
+                <th>YourID</th>
                 <th>Actions</th>
-                <th>Price</th>
                 
             </tr>
         </thead>
         <tbody>
          {% for p in pro %}
             <tr>
-                <td>{{ pro.id }}</td>
-                <td>{{ pro.idpro }}</td>
-                <td>{{ pro.namepro }}</td>
-                <td>{{ pro.quanlity}}</td>
-                <td>{{ pro.price}}</td>
+                <td>{{ p.id }}</td>
+                <td>{{ p.proid }}</td>
+                <td>{{ p.quantity }}</td>
+                <td>{{ p.usercart}}</td>
+                
             </tr>
         {% endfor %}
         <button href = ''>Accept</button>

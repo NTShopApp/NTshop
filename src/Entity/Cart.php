@@ -49,12 +49,12 @@ class Cart
         return $this;
     }
 
-    public function getProid(): ?product
+    public function getProid(): ?Product
     {
         return $this->proid;
     }
 
-    public function setProid(?product $proid): self
+    public function setProid(?Product $proid): self
     {
         $this->proid = $proid;
 
