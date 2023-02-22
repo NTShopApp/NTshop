@@ -26,7 +26,7 @@ class CartController extends AbstractController
         
     ]);
     }
-      /**
+     /**
      * @Route("/addone/{id}", name="addone")
      */
     public function addOneAction(CartRepository $repo, ValidatorInterface $valid, Product $pro, SupplierRepository $brand, Request $req ): Response
@@ -36,33 +36,44 @@ class CartController extends AbstractController
         
         $quantity = $req->query->get('quantity');
         $BR = $brand->findAll();
-        $cart = new Cart();
-        $id = $this->getUser();
-        $cart->setProId($pro);
-        $cart->setquantity($quantity);
-        // $cart->setbirthday(new \DateTime());
-        $cart->setusercart($id);
-        $error = $valid->validate($cart);
-        if(count($error)>0){
-            $err_str = (string)$error;
-            return new Response($err_str,400);
+        
+        $user = $this->getUser();
+        $data[]=[
+            'id'=>$user->getId()
+        ];
+       $id = $data[0]['id'];
+        //check pro id exist with $userId
+        $carts = $repo->findBy([
+               'proid'=>$pro->getId(),
+            'usercart'=>$id
+             ]);
+            //  return $this->json(count($carts));
+        //if null
+        if (count($carts)==0){
+             $cart = new Cart();
+            $cart->setProId($pro);
+            $cart->setquantity($quantity);
+            // $cart->setbirthday(new \DateTime());
+            $cart->setusercart($user);
+
         }
+       
+        else {
+            
+            $cart = $repo->find($carts[0]->getId()); // a Cart 
+            $oldquantity = $cart->getQuantity();
+            $newquantity = $oldquantity + $quantity;
+            $cart->setquantity($newquantity);
+        }
+       
+
+ 
         $repo->add($cart,true);
         // return $this->json($cart);
         return $this->redirectToRoute('cart', [
-            'brand' => $BR
+            'brand' => $BR, 'pro'=>$cart
         ], Response::HTTP_SEE_OTHER);
        
     }
-    /**
-     * @Route("/cart", name="cart")
-     */
-    public function cartt(SupplierRepository $brand ,CartRepository $repo): Response
-    {
-        $cart = $repo->findAll();
-        $BR = $brand->findAll();
-        return $this->render('cart/index.html.twig', [
-            'pro'=>$cart, 'brand' => $BR
-        ]);
-    }
+    
 }
