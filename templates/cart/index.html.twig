@@ -1,33 +1,42 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Cart</h1>
-   
-    <table class="table">
-        <thead>
-            <tr>
-                <th>No.</th>
-                <th>ID Product</th>
-                <th>Quantity</th>
-                <th>YourID</th>
-                <th>Actions</th>
-                
-            </tr>
-        </thead>
-        <tbody>
-         {% for p in pro %}
-            <tr>
-                <td>{{ p.id }}</td>
-                <td>{{ p.quantity }}</td>
-                <td>{{ p.proid }}</td>
-                
-                {# <td>{{ p.usercart}}</td> #}
-                
-            </tr>
-        {% endfor %}
-        <button href = ''>Check out</button>
-        </tbody>
-    </table>
-
+     <div class="container">
+                                 <h1 class="fw-bold mb-0 text-black">Shopping Cart</h1>
+                                  <h6 class="mb-0 text-muted"></h6>
+                                   <table class="table">
+                                     <tr> 
+                                        <th>No.</th>
+                                        <th>Productname</th>
+                                         <th>Quantity</th>
+                                          <th>Total</th>
+                                           <th>Action</th>
+                                         </tr> 
+                                         {% for p in pro %}
+                                         <tr> 
+                                            
+                                            <td>{{p.id}}</td>
+                                            <td>{{p.namepro}}</td> 
+                                            <td> 
+                                            <input id="form1" min="0" name="quantity" value="{{p.quantity}}" type="number" class="form-control form-control-sm" />
+                                        </td> 
+                                        <td><h6 class="mb-0"><span>$</span> {{sum(p.quantity,p.price)}} </h6></td>
+                                     <td><a href="{{ path('cart_delete', { 'id': p.id }) }}" class="text-muted text-decoration-none"><i class="fa-solid fa-trash-can"></i></a>
+                                </td>
+                                               </tr>
+                                               
+                                                {% endfor %}
+                                                
+                                              
+                                            </table>
+                                            <p style="text-align:center;">${{total}}</p> 
+                                            <hr class="my-4"> 
+                                                 <form action ="{{path('checkout')}}">
+                                             <input type="submit" value="Check out" name="btnBuy" class ="btn btn-primary" >
+                                            </form>
+                                            <div class="pt-5"> 
+                                                <h6 class="mb-0" style="text-align:center"><a href="{{path('app_test')}}" class="text-body">Back to shop</a></h6> 
+                                            </div>
+                                       
 
 {% endblock %}

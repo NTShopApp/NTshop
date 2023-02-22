@@ -14,7 +14,7 @@ class AppExtension extends AbstractExtension{
             new TwigFunction('sum',[$this,'sum'])
         ];
     }
-    public function calcarea(int $quantity,float $price){
+    public function sum(int $quantity,float $price){
         return $quantity*$price;
     }
 };

@@ -45,13 +45,15 @@ class CartRepository extends ServiceEntityRepository
    public function cart($value): array
    {
        return $this->createQueryBuilder('c')
-           ->andWhere('c.id = :val')
+       ->select('c.id, p.namepro , c.quantity, p.price, c.quantity*p.price as total')
+           ->andWhere('c.usercart = :val')
            ->setParameter('val', $value)
-           
+           ->innerJoin('c.proid','p')
            ->getQuery()
-           ->getResult()
+           ->getArrayResult()
        ;
    }
+  
 
 //    public function findOneBySomeField($value): ?Cart
 //    {
