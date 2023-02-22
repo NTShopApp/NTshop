@@ -107,5 +107,28 @@ class CartController extends AbstractController
             'pro'=>$cart, 'brand' => $BR, 'total'=>$totalAll
         ]);
     }
+     /**
+     * @Route("/delete/cart/{id}",name="cart_delete",requirements={"id"="\d+"})
+     */
     
+     public function deletecart(CartRepository $repo, Cart $c): Response
+     {
+         $repo->remove($c,true);
+         return $this->redirectToRoute('cart', [], Response::HTTP_SEE_OTHER);
+     }
+
+     /**
+      * @Route("/checkout", name="checkout")
+      */
+     public function checkout(SupplierRepository $brand): Response
+     {
+        $BR = $brand->findAll();
+
+
+
+        
+        return $this->render('cart/bill.html.twig', [
+            'brand' => $BR
+        ]);
+     }
 }
