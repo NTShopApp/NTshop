@@ -75,5 +75,37 @@ class CartController extends AbstractController
         ], Response::HTTP_SEE_OTHER);
        
     }
+    /**
+     * @Route("/cart", name="cart")
+     */
+    public function cartt(SupplierRepository $brand ,CartRepository $repo): Response
+    {
+        $user = $this->getUser();
+        $data[]=[
+            'id'=>$user->getId(),
+            'name'=>$user->getName(),
+            'email'=>$user->getUsername()
+        ];
+       $id = $data[0]['id'];
+        // return $this->json($repo->cart($id));
+        $cart = $repo->cart($id);
+        $BR = $brand->findAll();
+
+        // $cart = $reCart->findAll();
+        $user = $this->getUser();
+        $data[]=[
+            'id'=>$user->getId()
+        ];
+        $uid = $data[0]['id']; 
+        $product = $repo->cart($uid);
+        $totalAll = 0;
+        foreach ($product as $p) {
+            $totalAll += $p['total'];
+        }
+       
+        return $this->render('cart/index.html.twig', [
+            'pro'=>$cart, 'brand' => $BR, 'total'=>$totalAll
+        ]);
+    }
     
 }
