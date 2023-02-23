@@ -131,4 +131,55 @@ class CartController extends AbstractController
             'brand' => $BR
         ]);
      }
+     /**
+      * @Route("/checkout", name="checkout")
+      */
+      public function checkout(SupplierRepository $brand, OrderRepository $order, CartRepository $repo, OrderdetailRepository $orderdetail, ProductRepository $pro,
+      Cart $deletecart): Response
+      {
+         //insert  to order
+         $BR = $brand->findAll();
+         $order1= new Order();
+         $user = $this->getUser();
+         $data[]=[
+             'id'=>$user->getId()
+         ];
+         $id = $data[0]['id'];
+         $order1->setuserorder($user);
+         $product = $repo->cart($id);
+         $totalAll = 0;
+         foreach ($product as $p) {
+             $totalAll += $p['total'];
+         }
+         $order1->setTotal($totalAll);
+         $order1->setDate(new \Datetime());
+         $order->add($order1, true);
+         
+         // insert to orderdetail
+         $oid = $order->orderdetail($id)[0]['oid'];
+         $orderobject =$order->find($oid);
+ 
+          
+         $carts_uid = $repo->findcart($id);
+         
+         foreach ($carts_uid as $c){
+             $orderdetail1 = new Orderdetail();
+             $product = $c['id'];
+             $productobject = $pro->find($product);
+             $quantity = $c['quantity'];
+             $orderdetail1->setoid($orderobject);
+             $orderdetail1->setpid($productobject);
+             $orderdetail1->setQuantity($quantity);
+             $orderdetail->add($orderdetail1,true);
+                   
+         }
+ 
+         $delete = $repo->finduserid($id);
+         $delete->remove($deletecart,true);
+         return $this->json($orderdetail->getId());
+ 
+         // return $this->render('cart/bill.html.twig', [
+         //     'brand' => $BR
+         // ]);
+      }
 }
