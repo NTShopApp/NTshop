@@ -1,0 +1,72 @@
+   {% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <style>
+        body{
+           
+            background: linear-gradient(to right, pink,blue);
+        }
+        
+        article{
+            padding-top: 30px;
+            margin: 40px;
+            background-color: #fff;
+            height: auto;
+            text-align: center;
+        }
+       
+       
+        
+       
+        
+    </style>
+   <article >
+            <h1>Successful purchase</h1>
+            <hr>
+            <p>Code orders : <?=$row['0']?></p>
+             <div class="infor bg-white ">
+             <p> Customer's Name : </p>
+            <p> Customer's Phone :</p>
+            <p>Customer's Address : </p>
+             </div>
+            <hr>
+            <div class="bill">
+                <table class="table">
+                <tr> 
+                                        <th>Productname</th>
+                                         <th>Quantity</th>
+                                          <th>Price</th>
+                                           <th>Into money</th>
+                                           
+                </tr>
+
+                                            <tr> 
+                                            
+                                            <td></td> 
+                                            <td> 
+                                            <input id="form1" min="0" name="quantity" value="<?=$row['cquantity']?>" type="number" class="form-control form-control-sm" />
+                                        </td> 
+                                        <td><h6 class="mb-0"><span>$</span></h6></td>
+
+                                         <td></td>                                   
+                                       
+
+
+                                     </tr>
+                                     <tr>
+                                        <td colspan="3">Total</td>
+                                       
+                                        <td><?= $row1[0]?></td>
+                                     </tr>
+                                              
+                </table> 
+                
+                </div>
+            </div>
+            <h6 class="mb-0"><a href="homepage.php" class="text-body">Back to shop <i class="bi bi-box-arrow-left me-2"></i></a></h6> 
+
+        </article>
+
+        
+{% endblock %}

@@ -55,11 +55,17 @@ class Product
      */
     private $supplier;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Orderdetail::class, mappedBy="pid")
+     */
+    private $pid;
+
     
 
     public function __construct()
     {
         $this->proid = new ArrayCollection();
+        $this->pid = new ArrayCollection();
     }
 
 
@@ -167,6 +173,36 @@ class Product
     public function setSupplier(?Supplier $supplier): self
     {
         $this->supplier = $supplier;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Orderdetail>
+     */
+    public function getPid(): Collection
+    {
+        return $this->pid;
+    }
+
+    public function addPid(Orderdetail $pid): self
+    {
+        if (!$this->pid->contains($pid)) {
+            $this->pid[] = $pid;
+            $pid->setPid($this);
+        }
+
+        return $this;
+    }
+
+    public function removePid(Orderdetail $pid): self
+    {
+        if ($this->pid->removeElement($pid)) {
+            // set the owning side to null (unless already changed)
+            if ($pid->getPid() === $this) {
+                $pid->setPid(null);
+            }
+        }
 
         return $this;
     }

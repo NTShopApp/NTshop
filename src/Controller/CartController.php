@@ -3,9 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Cart;
+use App\Entity\Order;
+use App\Entity\Orderdetail;
 use App\Entity\Product;
 use App\Entity\User;
 use App\Repository\CartRepository;
+use App\Repository\OrderdetailRepository;
+use App\Repository\OrderRepository;
+use App\Repository\ProductRepository;
 use App\Repository\SupplierRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -81,7 +86,6 @@ class CartController extends AbstractController
         // return $this->json($repo->cart($id));
         $cart = $repo->cart($id);
         $BR = $brand->findAll();
-
         // $cart = $reCart->findAll();
         $user = $this->getUser();
         $data[]=[
@@ -111,16 +115,49 @@ class CartController extends AbstractController
      /**
       * @Route("/checkout", name="checkout")
       */
-     public function checkout(SupplierRepository $brand): Response
+     public function checkout(SupplierRepository $brand, OrderRepository $order, CartRepository $repo, OrderdetailRepository $orderdetail, ProductRepository $pro): Response
      {
+        //insert  to order
         $BR = $brand->findAll();
-
-
-
+        $order1= new Order();
+        $user = $this->getUser();
+        $data[]=[
+            'id'=>$user->getId()
+        ];
+        $id = $data[0]['id'];
+        $order1->setuserorder($user);
+        $product = $repo->cart($id);
+        $totalAll = 0;
+        foreach ($product as $p) {
+            $totalAll += $p['total'];
+        }
+        $order1->setTotal($totalAll);
+        $order1->setDate(new \Datetime());
+        $order->add($order1, true);
         
-        return $this->render('cart/bill.html.twig', [
-            'brand' => $BR
-        ]);
+        // insert to orderdetail
+         
+        $quantity = $repo->findcart($id);
+        $orderdetail1 = new Orderdetail();
+        
+        foreach ($quantity as $q){
+            for ($i = 1; $i < count($quantity); $i++){
+                $orderdetail1->setQuantity($q['quantity']);
+             }     
+        }
+        //  foreach ($quantity as $q){
+        //     $orderdetail1->setpid($q['Pid']);
+        // }
+        // $oid = $order->orderdetail($id);
+        // $oids = $oid[0]['id'];
+        
+        // $orderdetail1->setoid($oids);
+        // $orderdetail->add($orderdetail1,true);
+        return $this->json($orderdetail1);
+
+        // return $this->render('cart/bill.html.twig', [
+        //     'brand' => $BR
+        // ]);
      }
 }
 

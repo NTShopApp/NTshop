@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\OrderRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -32,6 +34,16 @@ class Order
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="orderpro")
      */
     private $userorder;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Orderdetail::class, mappedBy="oid")
+     */
+    private $oid;
+
+    public function __construct()
+    {
+        $this->oid = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -70,6 +82,36 @@ class Order
     public function setUserorder(?User $userorder): self
     {
         $this->userorder = $userorder;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Orderdetail>
+     */
+    public function getOid(): Collection
+    {
+        return $this->oid;
+    }
+
+    public function addOid(Orderdetail $oid): self
+    {
+        if (!$this->oid->contains($oid)) {
+            $this->oid[] = $oid;
+            $oid->setOid($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOid(Orderdetail $oid): self
+    {
+        if ($this->oid->removeElement($oid)) {
+            // set the owning side to null (unless already changed)
+            if ($oid->getOid() === $this) {
+                $oid->setOid(null);
+            }
+        }
 
         return $this;
     }
