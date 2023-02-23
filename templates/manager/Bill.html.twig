@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Bill list</h1>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>No.</th>
+                {# <th>Name</th> #}
+                <th>Total</th>
+                <th>Date</th>
+                {# <th>Addess</th> #}
+                <th>Action</th>
+
+
+                
+            </tr>
+        </thead>
+        <tbody>
+         {% for a in oid %}
+            <tr>
+                <td>{{ a.id}}</td>
+                {# <td>{{ a.Name }}</td> #}
+                <td>{{ a.Total }}</td>
+                <td>{{ a.Date|date('d/m/Y') }}</td>
+                <td><a href="{{ path('viewbill', { 'id': a.id }) }}">View</a></td>
+                {# <td> 
+                
+                    <a href="{{ path('viewbill', { 'id': a.id }) }}">Delete</a>
+                    
+                </td> #}
+               
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

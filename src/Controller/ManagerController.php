@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Order;
 use App\Entity\Supplier;
 use App\Entity\User;
 use App\Form\brandType;
+use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
 use App\Repository\SupplierRepository;
 use App\Repository\UserRepository;
@@ -13,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+date_default_timezone_set('Asia/Ho_Chi_Minh');
 
 class ManagerController extends AbstractController
 {
@@ -91,5 +94,30 @@ class ManagerController extends AbstractController
         return $this->render('manager/Error.html.twig', [
             'brand' => $BR
         ]);
+    }
+      /**
+     * @Route("/manager/bill", name="managerBill")
+     */
+    public function managerbill(SupplierRepository $brand, OrderRepository $repo): Response
+    {
+        $oid = $repo->findAll();
+        $BR = $brand->findAll();
+        return $this->render('manager/Bill.html.twig', [
+             'brand' => $BR,'oid'=>$oid
+        ]);
+    }
+    /**
+     * @Route("/view/{id}", name="viewbill")
+     */
+    public function view(SupplierRepository $brand, OrderRepository $order, ProductRepository $pro,
+    UserRepository $user, Order $o): Response
+    {
+       
+        $BR = $brand->findAll();
+        $viewdate = $order->viewdate($o);
+        $billproduct = $order->billproduct($o);
+        $billdetail = $order->billdetail($o);
+        return $this->render('manager/viewbill.html.twig', ['brand' => $BR, 'billdetail'=>$billdetail,'billproduct'=>$billproduct,'date'=>$viewdate
+    ]);
     }
 }

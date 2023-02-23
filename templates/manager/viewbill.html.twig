@@ -26,14 +26,16 @@
    <article >
             <h1>Successful</h1>
             <hr>
+            {% for d in date %}
+              <p> Date : {{d.Date|date('d/m/Y')}}</p>  
+            {% endfor %}
+            
             {# <p>{{date}}</p> #}
-            <p>Code orders :{{oid}}</p>
+            {# <p>Code orders :{{oid}}</p> #}
 
              <div class="infor bg-white ">
-             {% for u in userinfo %}
+             {% for u in billdetail %}
             <p> Customer's Name : {{u.Name}}</p>
-            <p> Customer's Phone :{{u.Phone}}</p>
-            <p>Customer's Address : {{u.Address}}</p>
              {% endfor %}
            
              </div>
@@ -46,7 +48,7 @@
                 <th>Price</th>
                                            
                 </tr>
-                {% for p in productdetail %}
+                {% for p in billproduct %}
                  <tr> 
                   
                  <td>{{p.namepro}}</td> 
@@ -62,7 +64,7 @@
                  <tr>
                 <td colspan="3">Total</td>
                                        
-                <td>{{total}}</td>
+                {# <td>{{total}}</td> #}
                 </tr>
                                               
                 </table> 

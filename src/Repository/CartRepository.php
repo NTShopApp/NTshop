@@ -69,6 +69,20 @@ class CartRepository extends ServiceEntityRepository
             ->getArrayResult()
         ;
     }
+    /**
+    * @return Cart[] Returns an array of Cart objects
+    */
+    public function finduserid($value): array
+    {
+        return $this->createQueryBuilder('c')
+        ->select('c.id')
+        ->innerJoin('c.usercart','u')
+            ->andWhere('u.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getArrayResult()
+        ;
+    }
 
   
 

@@ -39,20 +39,20 @@ class OrderdetailRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Orderdetail[] Returns an array of Orderdetail objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('o')
-//            ->andWhere('o.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('o.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+   /**
+    * @return Orderdetail[] Returns an array of Orderdetail objects
+    */
+   public function productdetail($value): array
+   {
+       return $this->createQueryBuilder('o')
+       ->select('p.namepro, p.price, o.Quantity')
+       ->innerJoin('o.pid','p')
+           ->andWhere('o.oid = :val')
+           ->setParameter('val', $value)
+           ->getQuery()
+           ->getResult()
+       ;
+   }
 
 //    public function findOneBySomeField($value): ?Orderdetail
 //    {

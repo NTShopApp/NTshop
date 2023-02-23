@@ -39,27 +39,97 @@ class OrderRepository extends ServiceEntityRepository
         }
     }
 
-   /**
-    * @return Order[] Returns an array of Order objects
-    */
-   public function orderdetail($value): array
-   {
-       return $this->createQueryBuilder('o')
-       ->select('o.id')
-           ->andWhere('o.userorder = :val')
-           ->setParameter('val', $value)
-           ->getQuery()
-           ->getResult()
-       ;
-   }
+    /**
+     * @return Order[] Returns an array of Order objects
+     */
+    public function orderdetail($value): array
+    {
+        return $this->createQueryBuilder('o')
+            ->select('max(o.id) as oid')
+            ->andWhere('o.userorder = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult();
+    }
+      /**
+     * @return Order[] Returns an array of Order objects
+     */
+    public function date($value): array
+    {
+        return $this->createQueryBuilder('o')
+            ->select('o.Date')
+            ->andWhere('o.userorder = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult();
+    }
+    /**
+     * @return Order[] Returns an array of Order objects
+     */
+    public function userinfo($value): array
+    {
+        return $this->createQueryBuilder('o')
+            ->select(' u.Name , u.Phone, u.Address')
+            ->innerJoin('o.userorder', 'u')
+            ->andWhere('o.userorder = :val')
+            ->setParameter('val', $value)
+            ->orderBy('o.id','DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
+    }
+     /**
+     * @return Order[] Returns an array of Order objects
+     */
+    public function billdetail($value): array
+    {
+        return $this->createQueryBuilder('o')
+            ->select(' u.Name ')
+            ->innerJoin('o.userorder', 'u')
+            ->andWhere('o.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult();
+            //SELECT u.name FROM `order` o inner join `user` u on u.id = o.userorder_id where o.id =79
+    }
+    /**
+     * @return Order[] Returns an array of Order objects
+     */
+    public function billproduct($value): array
+    {
+        return $this->createQueryBuilder('o')
+            ->select(' od.Quantity ,p.namepro, p.price ')
+            ->innerJoin('o.oid', 'od')
+            ->innerJoin('od.pid','p')
+            ->andWhere('o.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult();
+            //SELECT od.quantity ,p.namepro, p.price FROM `order`o 
+            //INNER join `orderdetail` od on o.id = od.oid_id INNER join `product` p on od.pid_id = p.id where o.id =79
+    }
+        /**
+     * @return Order[] Returns an array of Order objects
+     */
+    public function viewdate($value): array
+    {
+        return $this->createQueryBuilder('o')
+            ->select(' o.Date ')
+            
+            ->andWhere('o.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult();
+            //SELECT u.name FROM `order` o inner join `user` u on u.id = o.userorder_id where o.id =79
+    }
 
-//    public function findOneBySomeField($value): ?Order
-//    {
-//        return $this->createQueryBuilder('o')
-//            ->andWhere('o.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    //    public function findOneBySomeField($value): ?Order
+    //    {
+    //        return $this->createQueryBuilder('o')
+    //            ->andWhere('o.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }
