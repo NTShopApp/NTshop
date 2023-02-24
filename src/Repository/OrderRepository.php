@@ -58,8 +58,10 @@ class OrderRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('o')
             ->select('o.Date')
-            ->andWhere('o.userorder = :val')
+            ->andWhere('o.id = :val')
             ->setParameter('val', $value)
+            ->orderBy('o.id','DESC')
+            ->setMaxResults(1)
             ->getQuery()
             ->getResult();
     }
@@ -121,6 +123,44 @@ class OrderRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
             //SELECT u.name FROM `order` o inner join `user` u on u.id = o.userorder_id where o.id =79
+    }
+     /**
+     * @return Order[] Returns an array of Order objects
+     */
+    public function totalbill($value): array
+    {
+        return $this->createQueryBuilder('o')
+            ->select('o.Total')
+            ->andWhere('o.userorder = :val')
+            ->setParameter('val', $value)
+            ->orderBy('o.id','DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
+    }
+     /**
+     * @return Order[] Returns an array of Order objects
+     */
+    public function totaldetail($value): array
+    {
+        return $this->createQueryBuilder('o')
+            ->select('o.Total')
+            ->andWhere('o.id = :val')
+            ->setParameter('val', $value)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Order[] Returns an array of Order objects
+     */
+    public function managerbill(): array
+    {
+        return $this->createQueryBuilder('o')
+            ->orderBy('o.id','DESC')
+            ->getQuery()
+            ->getResult();
     }
 
     //    public function findOneBySomeField($value): ?Order

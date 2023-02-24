@@ -100,7 +100,7 @@ class ManagerController extends AbstractController
      */
     public function managerbill(SupplierRepository $brand, OrderRepository $repo): Response
     {
-        $oid = $repo->findAll();
+        $oid = $repo->managerbill();
         $BR = $brand->findAll();
         return $this->render('manager/Bill.html.twig', [
              'brand' => $BR,'oid'=>$oid
@@ -114,10 +114,12 @@ class ManagerController extends AbstractController
     {
        
         $BR = $brand->findAll();
+        $total = $order->totaldetail($o);
         $viewdate = $order->viewdate($o);
         $billproduct = $order->billproduct($o);
         $billdetail = $order->billdetail($o);
-        return $this->render('manager/viewbill.html.twig', ['brand' => $BR, 'billdetail'=>$billdetail,'billproduct'=>$billproduct,'date'=>$viewdate
+        return $this->render('manager/viewbill.html.twig', ['brand' => $BR, 'billdetail'=>$billdetail,'billproduct'=>$billproduct,'date'=>$viewdate,
+        'total'=>$total
     ]);
     }
 }

@@ -27,7 +27,7 @@
             <h1>Successful</h1>
             <hr>
             {% for d in date %}
-              <p> Date : {{d.Date|date('d/m/Y')}}</p>  
+              <p> Date : {{d.Date|date('d/m/Y H:i')}}</p>  
             {% endfor %}
             
             {# <p>{{date}}</p> #}
@@ -60,12 +60,15 @@
                 </td>
                  </tr>
                  {% endfor %}
-                                      
+                        
+                                     
                  <tr>
-                <td colspan="3">Total</td>
-                                       
-                {# <td>{{total}}</td> #}
+                <td colspan="2">Total</td>
+                     {% for t in total %}                    
+                <td style = "margin-right:30px">${{t.Total}}</td>
+                {% endfor %} 
                 </tr>
+                
                                               
                 </table> 
                 

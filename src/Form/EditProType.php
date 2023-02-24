@@ -1,6 +1,8 @@
 <?php
 namespace App\Form;
 
+use App\Entity\Supplier;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -31,6 +33,10 @@ class EditProType extends AbstractType{
         ])
         ->add('image',HiddenType::class,[
             'required'=>false
+        ])
+        ->add('supplier',EntityType::class,[
+            'class'=>Supplier::class,
+            'choice_label'=>'namesup'
         ])
         ->add('save',SubmitType::class,[
             'label'=>"Add"

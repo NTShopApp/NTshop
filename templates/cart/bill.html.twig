@@ -26,7 +26,10 @@
    <article >
             <h1>Successful</h1>
             <hr>
-            {# <p>{{date}}</p> #}
+            {% for d in date %}
+                <p>Date :{{d.Date|date('d/m/Y H:i')}}</p>
+            {% endfor %}
+            
             <p>Code orders :{{oid}}</p>
 
              <div class="infor bg-white ">
@@ -60,9 +63,11 @@
                  {% endfor %}
                                       
                  <tr>
-                <td colspan="3">Total</td>
-                                       
-                <td>{{total}}</td>
+                <td colspan="2">Total</td>
+                   {% for t in total %}
+                    <td>${{t.Total}}</td>
+                   {% endfor %}                    
+                
                 </tr>
                                               
                 </table> 

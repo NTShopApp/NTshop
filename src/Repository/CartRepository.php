@@ -83,7 +83,19 @@ class CartRepository extends ServiceEntityRepository
             ->getArrayResult()
         ;
     }
-
+ /**
+    * @return Cart[] Returns an array of Cart objects
+    */
+    public function count($value): array
+    {
+        return $this->createQueryBuilder('c')
+        ->select('count(c.id) as count')
+            ->andWhere('c.usercart = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getArrayResult()
+        ;
+    }
   
 
 //    public function findOneBySomeField($value): ?Cart

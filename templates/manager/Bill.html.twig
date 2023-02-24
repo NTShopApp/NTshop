@@ -23,7 +23,7 @@
                 <td>{{ a.id}}</td>
                 {# <td>{{ a.Name }}</td> #}
                 <td>{{ a.Total }}</td>
-                <td>{{ a.Date|date('d/m/Y') }}</td>
+                <td>{{ a.Date|date('d/m/Y H:i') }}</td>
                 <td><a href="{{ path('viewbill', { 'id': a.id }) }}">View</a></td>
                 {# <td> 
                 

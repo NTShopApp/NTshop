@@ -118,7 +118,7 @@ class ProductController extends AbstractController
                 $p->setImage($newFilename);
             }
             $this->repo->add($p,true);
-            return $this->redirectToRoute('manager', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('managerProduct', [], Response::HTTP_SEE_OTHER);
         }
         return $this->render("product/editproduct.html.twig",[
             'form' => $form->createView(), 'brand' => $BR

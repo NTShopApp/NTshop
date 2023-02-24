@@ -31,10 +31,23 @@
                                             </table>
                                             <p style="text-align:center;">${{total}}</p> 
                                             <hr class="my-4"> 
+                                            {% for c in counts %}
+                                            {% if c.count == 0 %}
+                                                
+                                                    <form action ="{{path('checkout')}}" hidden>
+                                                     <input type="submit" value="Check out" name="btnBuy" class ="btn btn-primary" >
+                                                  </form>
+                                                  <div class="pt-5">
+                                              
+                                            {% else %}
                                                  <form action ="{{path('checkout')}}">
                                              <input type="submit" value="Check out" name="btnBuy" class ="btn btn-primary" >
                                             </form>
-                                            <div class="pt-5"> 
+                                            
+                                            <div class="pt-5">
+                                            {% endif %}
+                                            {% endfor %}
+                                                 
                                                 <h6 class="mb-0" style="text-align:center"><a href="{{path('app_test')}}" class="text-body">Back to shop</a></h6> 
                                             </div>
                                        

@@ -48,6 +48,8 @@ class CartController extends AbstractController
              ]);
             //  return $this->json(count($carts));
         //if null
+        $cartts = $repo->count($id);
+
         if (count($carts)==0){
              $cart = new Cart();
             $cart->setProId($pro);
@@ -70,7 +72,7 @@ class CartController extends AbstractController
         $repo->add($cart,true);
         // return $this->json($cart);
         return $this->redirectToRoute('cart', [
-            'brand' => $BR, 'pro'=>$cart
+            'brand' => $BR, 'pro'=>$cart , 'counts'=>$cartts
         ], Response::HTTP_SEE_OTHER);
        
     }
@@ -100,9 +102,10 @@ class CartController extends AbstractController
         foreach ($product as $p) {
             $totalAll += $p['total'];
         }
+        $cartts = $repo->count($id);
        
         return $this->render('cart/index.html.twig', [
-            'pro'=>$cart, 'brand' => $BR, 'total'=>$totalAll
+            'pro'=>$cart, 'brand' => $BR, 'total'=>$totalAll,'counts'=>$cartts
         ]);
     }
 
@@ -191,11 +194,8 @@ class CartController extends AbstractController
         $oid = $order->orderdetail($id)[0]['oid'];
         $userinfo = $order->userinfo($id);
         $productdetail = $orderdetail->productdetail($oid);
-        $product = $repo->cart($id);
-        $totalAll = 0;
-        foreach ($product as $p) {
-            $totalAll += $p['total'];
-        }
+        $totalAll = $order->totalbill($id);
+      
         $date =$order->date($oid);
          return $this->render('cart/bill.html.twig', [
             'brand' => $BR,'oid'=>$oid, 'total'=>$totalAll, 'userinfo'=>$userinfo,'productdetail'=>$productdetail
