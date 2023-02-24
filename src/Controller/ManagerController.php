@@ -103,5 +103,20 @@ class ManagerController extends AbstractController
              'brand' => $BR,'oid'=>$oid
         ]);
     }
-    
+    /**
+     * @Route("/view/{id}", name="viewbill")
+     */
+    public function view(SupplierRepository $brand, OrderRepository $order, ProductRepository $pro,
+    UserRepository $user, Order $o): Response
+    {
+       
+        $BR = $brand->findAll();
+        $total = $order->totaldetail($o);
+        $viewdate = $order->viewdate($o);
+        $billproduct = $order->billproduct($o);
+        $billdetail = $order->billdetail($o);
+        return $this->render('manager/viewbill.html.twig', ['brand' => $BR, 'billdetail'=>$billdetail,'billproduct'=>$billproduct,'date'=>$viewdate,
+        'total'=>$total
+    ]);
+    }
 }
