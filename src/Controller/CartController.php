@@ -182,4 +182,28 @@ class CartController extends AbstractController
          //     'brand' => $BR
          // ]);
       }
+       /**
+      * @Route("/lastbill", name="lastbill")`
+      */
+     public function lastbill(SupplierRepository $brand, OrderRepository $order, CartRepository $repo, OrderdetailRepository $orderdetail, ProductRepository $pro,
+     UserRepository $user): Response
+     {
+        
+        $BR = $brand->findAll();
+        $user = $this->getUser();
+        $data[]=[
+            'id'=>$user->getId()
+        ];
+        $id = $data[0]['id'];
+        $oid = $order->orderdetail($id)[0]['oid'];
+        $userinfo = $order->userinfo($id);
+        $productdetail = $orderdetail->productdetail($oid);
+        $totalAll = $order->totalbill($id);
+      
+        $date =$order->date($oid);
+         return $this->render('cart/bill.html.twig', [
+            'brand' => $BR,'oid'=>$oid, 'total'=>$totalAll, 'userinfo'=>$userinfo,'productdetail'=>$productdetail
+            ,'date'=>$date
+         ]);
+     }
 }
