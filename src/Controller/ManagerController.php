@@ -120,7 +120,7 @@ class ManagerController extends AbstractController
         $billproduct = $order->billproduct($o);
         $billdetail = $order->billdetail($o);
         return $this->render('manager/viewbill.html.twig', ['brand' => $BR, 'billdetail'=>$billdetail,'billproduct'=>$billproduct,'date'=>$viewdate,
-        'total'=>$total
+        'total'=>$total, 'oid'=>$o
     ]);
     }
     /**

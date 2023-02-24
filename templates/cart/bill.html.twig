@@ -9,8 +9,10 @@
         }
         
         article{
+            
+            width : 800px;
             padding-top: 30px;
-            margin: 40px;
+            margin: auto;
             background-color: #fff;
             height: auto;
             
@@ -23,47 +25,50 @@
        
         
     </style>
-   <article >
-            <h1>Successful</h1>
+   <article style ="background-color:#FFCC99;" >
+            {# <h1>Successful</h1> #}
             <hr>
             {% for d in date %}
                 <p>Date :{{d.Date|date('d/m/Y H:i')}}</p>
             {% endfor %}
             
-            <p>Code orders :{{oid}}</p>
+            <p>Order's ID :{{oid}}</p>
 
-             <div class="infor bg-white ">
+             <div class="infor ">
              {% for u in userinfo %}
-            <p> Customer's Name : {{u.Name}}</p>
-            <p> Customer's Phone :{{u.Phone}}</p>
-            <p>Customer's Address : {{u.Address}}</p>
+            <p  style ="margin-top:30px;"> Name:  {{u.Name}}</p>
+            <p style ="margin-top:30px"> Phone: {{u.Phone}}</p>
+            <p  style ="margin-top:30px; margin-bottom:30px">Address: {{u.Address}}</p>
              {% endfor %}
-           
              </div>
             <hr>
             <div class="bill">
                 <table class="table">
                 <tr> 
-                <th>Productname</th>
-                <th>Quantity</th>
+                <th>Item</th>
+                <th >Quantity</th>
                 <th>Price</th>
-                                           
+                <th>Total</th>
+                         
                 </tr>
                 {% for p in productdetail %}
                  <tr> 
                   
                  <td>{{p.namepro}}</td> 
                 <td> 
-                <input id="form1" min="0" name="quantity" value="{{p.Quantity}}" type="number" class="form-control form-control-sm" />
+                <p >{{p.Quantity}} </p>
+                {# <input id="form1" style ="background-color:#FFCC99" min="0" name="quantity" value="{{p.Quantity}}" type="number" class="form-control form-control-sm" /> #}
                 </td> 
+                <td><p>${{p.price}}</p></td>
                 <td>
+                
                 <h6 class="mb-0"><span>${{sum(p.Quantity,p.price)}}</span> </h6>
                 </td>
                  </tr>
                  {% endfor %}
                                       
                  <tr>
-                <td colspan="2">Total</td>
+                <td colspan="3">Total</td>
                    {% for t in total %}
                     <td>${{t.Total}}</td>
                    {% endfor %}                    
@@ -74,7 +79,7 @@
                 
                 </div>
             </div>
-            <h6 class="mb-0"><a href="{{path('app_test')}}" class="text-body">Back to shop <i class="bi bi-box-arrow-left me-2"></i></a></h6> 
+            <h6 class="my-5"><a href="{{path('app_test')}}" class="text-body">Back to shop <i class="bi bi-box-arrow-left me-2"></i></a></h6> 
 
         </article>
 
