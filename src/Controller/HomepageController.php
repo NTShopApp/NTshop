@@ -11,16 +11,16 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Role\Role;
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 
-class TestController extends AbstractController
+class HomepageController extends AbstractController
 {
     /**
-     * @Route("/test", name="app_test")
+     * @Route("/Homepage", name="app_test")
      */
     public function index(ProductRepository $repo, SupplierRepository $brand): Response
     {
         $BR = $brand->findAll();
         $pro = $repo->findAll();
-        return $this->render('test/index.html.twig', [
+        return $this->render('homepage/index.html.twig', [
             'pro' => $pro, 'brand' => $BR
         ]);
     }
@@ -44,7 +44,7 @@ class TestController extends AbstractController
     public function Blog(SupplierRepository $brand): Response
     {
         $BR = $brand->findAll();
-        return $this->render('test/blog.html.twig', [ 'brand' => $BR]);
+        return $this->render('homepage/blog.html.twig', [ 'brand' => $BR]);
     }
     /**
      * @Route("/blogdetail", name="blogdetails")
@@ -52,7 +52,7 @@ class TestController extends AbstractController
     public function blogdetail(SupplierRepository $brand): Response
     {
         $BR = $brand->findAll();
-        return $this->render('test/blogdetail.html.twig', ['brand' => $BR]);
+        return $this->render('homepage/blogdetail.html.twig', ['brand' => $BR]);
     }
    
     /**
@@ -61,7 +61,7 @@ class TestController extends AbstractController
     public function contact(SupplierRepository $brand): Response
     {
         $BR = $brand->findAll();
-        return $this->render('test/contact.html.twig', ['brand' => $BR]);
+        return $this->render('homepage/contact.html.twig', ['brand' => $BR]);
     }
     /**
      * @Route("/policy", name="policy")
@@ -69,7 +69,7 @@ class TestController extends AbstractController
     public function policy(SupplierRepository $brand): Response
     {
         $BR = $brand->findAll();
-        return $this->render('test/policy.html.twig', ['brand' => $BR]);
+        return $this->render('homepage/policy.html.twig', ['brand' => $BR]);
     }
     
     
@@ -79,7 +79,7 @@ class TestController extends AbstractController
     public function term(SupplierRepository $brand): Response
     {
         $BR = $brand->findAll();
-        return $this->render('test/terms.html.twig', ['brand' => $BR]);
+        return $this->render('homepage/terms.html.twig', ['brand' => $BR]);
     }
      /**
      * @Route("/brand", name="brand")

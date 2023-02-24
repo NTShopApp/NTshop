@@ -6,6 +6,7 @@ use App\Entity\Order;
 use App\Entity\Supplier;
 use App\Entity\User;
 use App\Form\brandType;
+use App\Form\EditBrand;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
 use App\Repository\SupplierRepository;
@@ -121,5 +122,21 @@ class ManagerController extends AbstractController
         return $this->render('manager/viewbill.html.twig', ['brand' => $BR, 'billdetail'=>$billdetail,'billproduct'=>$billproduct,'date'=>$viewdate,
         'total'=>$total
     ]);
+    }
+    /**
+     * @Route("/editbrand/{id}", name="editbrand")
+     */
+    public function editbrand(Request $req, SupplierRepository $repo, Supplier $s): Response
+    {
+        $BR = $repo->findAll();
+        $form = $this->createForm(EditBrand::class,$s);
+        $form->handleRequest($req);
+        if($form->isSubmitted()&&$form->isValid()){
+            $repo->add($s,true);
+            return $this->redirectToRoute('managerBrand', [], Response::HTTP_SEE_OTHER);
+        }
+        return $this->render('manager/editbrand.html.twig',[
+            'form'=>$form->createView(),'brand' => $BR
+            ]);
     }
 }
