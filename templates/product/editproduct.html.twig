@@ -11,10 +11,11 @@
         {{ form_widget(form.price) }}
         <label>Product's Information</label>
         {{ form_widget(form.infopro) }}
+        <label>Supplier</label>
+{{ form_widget(form.supplier) }}
 
     <div class="pt-3">
     {% set img = form.image.vars.value %}
-    {{img}}
         {% if img %}
             <img src="{{asset('images/'~img)}}"
         class="w-25 shadow p-3 mb-5 bg-body rounded" />
@@ -24,8 +25,7 @@
         {% endif %}
                                                 
 {{ form_widget(form.image) }}
-<label>Supplier</label>
-{{ form_widget(form.supplier) }}
+
         {{ form_end(form) }}
     </div>
 {% endblock %}
