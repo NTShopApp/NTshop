@@ -92,4 +92,16 @@ class ManagerController extends AbstractController
             'brand' => $BR
         ]);
     }
+      /**
+     * @Route("/manager/bill", name="managerBill")
+     */
+    public function managerbill(SupplierRepository $brand, OrderRepository $repo): Response
+    {
+        $oid = $repo->managerbill();
+        $BR = $brand->findAll();
+        return $this->render('manager/Bill.html.twig', [
+             'brand' => $BR,'oid'=>$oid
+        ]);
+    }
+    
 }
