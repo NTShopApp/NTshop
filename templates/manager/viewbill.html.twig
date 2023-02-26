@@ -3,10 +3,7 @@
 {% block body %}
 
     <style>
-        body{
-           
-            background-color:#FFCC99;
-        }
+        
         
         article{
            width : 800px;
@@ -23,7 +20,7 @@
        
         
     </style>
-   <article style="background-color:#FFCC99;">
+   <article>
             {# <h1>Successful</h1> #}
             <hr>
             {% for d in date %}
@@ -36,7 +33,7 @@
             {% endfor %}
             
 
-             <div class="infor "style="background-color:#FFCC99;">
+             <div class="infor ">
              {% for u in billdetail %}
             <p  style ="margin-top:30px; margin-bottom:30px"> Name : {{u.Name}}</p>
              {% endfor %}
