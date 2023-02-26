@@ -29,7 +29,7 @@ class HomepageController extends AbstractController
     //  */
     // public function Login(): Response
     // {
-    //     return $this->render('test/login.html.twig');
+    //     return $this->render('homepage/login.html.twig');
     // }
     // /**
     //  * @Route("/register", name="register")
